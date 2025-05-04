@@ -105,6 +105,18 @@ public class Model {
      */
     public boolean maxTileExists() {
         // TODO: Task 3. Fill in this function.
+        //Get the Board size
+        int boardSize = getBoard().size();
+
+        //loops
+        for(int col = 0 ; col < boardSize ; col++){
+            for(int row = 0 ; row < boardSize ; row++) {
+                if (getBoard().tile(col,row) != null && getBoard().tile(col,row).value() == MAX_PIECE){
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
