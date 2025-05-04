@@ -176,9 +176,19 @@ public class Model {
      */
     public void moveTileUpAsFarAsPossible(int x, int y) {
         Tile currTile = board.tile(x, y);
+        int boardSize = getBoard().size();
         int myValue = currTile.value();
         int targetY = y;
-
+        if (getBoard().tile(x,y) != null){
+            for(int Y_add = y; Y_add < boardSize; Y_add++){
+                if(getBoard().tile(x,Y_add) == null){
+                    targetY ++;
+                }else{
+                    break;
+                }
+            }
+            board.move(x,targetY,currTile);
+        }
         // TODO: Tasks 5, 6, and 10. Fill in this function.
     }
 
