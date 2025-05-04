@@ -128,6 +128,35 @@ public class Model {
      */
     public boolean atLeastOneMoveExists() {
         // TODO: Fill in this function.
+        //size of board
+        int sizeBoard = getBoard().size();
+
+        //judge the situation of having empty space on the board
+        if(emptySpaceExists()){
+            return true;
+        }
+
+        /*
+        judge There are two adjacent tiles with the same value
+        Using loops for judging each tiles
+        */
+        for(int col = 0; col < sizeBoard ; col++){
+            for(int row = 0; row < sizeBoard ; row++) {
+                if (getBoard().tile(col,row) != null ){
+                    if((row + 1 < sizeBoard && getBoard().tile(col,row+1).value() == getBoard().tile(col,row).value()) || (row - 1 >= 0 && getBoard().tile(col,row-1).value() == getBoard().tile(col,row).value())){
+                        return true;
+                    }
+                    if((col + 1 < sizeBoard && getBoard().tile(col+1,row).value() == getBoard().tile(col,row).value()) || (col - 1 >= 0 && getBoard().tile(col-1,row).value() == getBoard().tile(col,row).value())){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        //judge if there is the Max_value
+        if(maxTileExists()){
+            return  true;
+        }
         return false;
     }
 
