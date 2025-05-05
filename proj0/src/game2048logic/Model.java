@@ -176,19 +176,42 @@ public class Model {
      */
     public void moveTileUpAsFarAsPossible(int x, int y) {
         Tile currTile = board.tile(x, y);
-        int boardSize = getBoard().size();
         int myValue = currTile.value();
         int targetY = y;
-        if (getBoard().tile(x,y) != null){
-            for(int Y_add = y; Y_add < boardSize; Y_add++){
-                if(getBoard().tile(x,Y_add) == null){
-                    targetY ++;
-                }else{
-                    break;
-                }
+
+        // 1. 先找最远的空位置
+        for (targetY = y + 1; targetY < board.size(); targetY++) {
+            if (board.tile(x, targetY) != null) {
+                break;
             }
-            board.move(x,targetY,currTile);
         }
+        targetY--; // 回退到最后一个空位置
+
+        // 2. 检查是否能合并
+        if (targetY + 1 < board.size()) {
+            Tile nextTile = board.tile(x, targetY + 1);
+            if (nextTile != null
+                    && nextTile.value() == myValue
+                    && !nextTile.wasMerged()
+                    && !currTile.wasMerged()) {
+                // 合并后，继续向上找最远的空位置
+                score += myValue * 2;
+                int mergeY = targetY + 1; // 合并到 y+1 的位置
+                // 从 mergeY 开始，继续向上找空位
+                for (targetY = mergeY + 1; targetY < board.size(); targetY++) {
+                    if (board.tile(x, targetY) != null) {
+                        break;
+                    }
+                }
+                targetY--; // 回退到最后一个空位
+            }
+        }
+
+        // 3. 执行移动
+        if (targetY != y) {
+            board.move(x, targetY, currTile);
+        }
+
         // TODO: Tasks 5, 6, and 10. Fill in this function.
     }
 
