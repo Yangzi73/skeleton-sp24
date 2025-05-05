@@ -231,6 +231,9 @@ public class Model {
     }
 
     public void tilt(Side side) {
+        for(int x = 0; x < getBoard().size(); x++){
+            tiltColumn(x);
+        }
         // TODO: Tasks 8 and 9. Fill in this function.
     }
 
